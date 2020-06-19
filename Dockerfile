@@ -8,4 +8,4 @@ RUN apt-get update \
     && unzip driver.zip \
     && rm driver.zip
 
-ENTRYPOINT ["migrate"]
+CMD ["migrate"]
