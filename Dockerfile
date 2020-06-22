@@ -1,11 +1,15 @@
 FROM flyway/flyway:6.4
+
 USER root
 
-RUN apt-get update \
-    && apt-get install unzip \
-    && cd /flyway/drivers \ 
-    && curl -o driver.zip https://s3.amazonaws.com/redshift-downloads/drivers/jdbc/1.2.45.1069/RedshiftJDBC42-1.2.45.1069.zip \
-    && unzip driver.zip \
-    && rm driver.zip
+# Add Redshift JDBC driver
+ENV REDSHIFT_DRIVER=1.2.45.1069
+ADD https://s3.amazonaws.com/redshift-downloads/drivers/jdbc/${REDSHIFT_DRIVER}/RedshiftJDBC42-no-awssdk-${REDSHIFT_DRIVER}.jar /flyway/drivers
 
-CMD ["migrate"]
+# Default location from flyway base image for migrations is
+# /flyway/sql
+
+# Default config is at /flyway/conf but you probably won't need to change that
+
+
+CMD []
